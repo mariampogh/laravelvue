@@ -12,27 +12,43 @@ window.Vue = require('vue');
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Auth from './Components/packages/auth/Auth.js'
+import {store} from './store/index.js'
+import routes from './router/index.js'
 
 Vue.use(VueRouter)
-Vue.use(Auth)
-
-let Home = require('./components/Home.vue');
-let About = require('./components/About.vue');
-let LogIn = require('./components/auth/Login.vue');
-let Register = require('./components/auth/Register.vue');
-
-
-const routes = [
-	{ path: '/home', component: Home },
-	{ path: '/about', component: About },
-	{ path: '/logIn', component: LogIn, meta: { forVisitors: true } },
-	{ path: '/register', component: Register, meta: { forVisitors: true } },
-]
 
 const router = new VueRouter({
-  routes // short for `routes: routes`
+	routes,
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresVisitor)) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    if (store.getters.loggedIn) {
+      next({
+       name: 'user'
+      })
+    } else {
+      next()
+    }
+  } else if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters.loggedIn) {
+      next({
+       name: 'login'
+      })
+    } else {
+      next()
+    }
+  } else  if (!to.matched.length) {
+    next({
+      name: 'notFound'
+    })
+  } else {
+    next() // make sure to always call next()!
+  }
+})
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -40,10 +56,12 @@ const router = new VueRouter({
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('test-component', require('./components/Test.vue'));
 Vue.component('header-component', require('./components/layouts/Header.vue'));
+Vue.component('leftMenu', require('./components/admin/LeftMenu.vue'));
+// Vue.component('addUser', require('./components/admin/AddUser.vue'));
 
 const app = new Vue({
 	el: '#app',
 	router,
+	store,
 });

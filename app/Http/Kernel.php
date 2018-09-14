@@ -34,8 +34,7 @@ class Kernel extends HttpKernel
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
-            \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        ],
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,        ],
 
         'api' => [
             'throttle:60,1',
@@ -59,5 +58,8 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin' => \App\Http\Middleware\IsAdmin::class,
+        'hasCv' => \App\Http\Middleware\HasCv::class,
+        'chekCv' => \App\Http\Middleware\CheckCv::class,
     ];
 }

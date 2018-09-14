@@ -1,7 +1,6 @@
 <template>
     <div>
-        <header-component></header-component>
+        <leftMenu></leftMenu>
         <router-view></router-view>
     </div>
 </template>
-

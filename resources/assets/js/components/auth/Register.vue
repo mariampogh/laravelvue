@@ -15,16 +15,22 @@
                             <a class="btn btn-lg" href="" title="Facebook"><i class="fa fa-2x fa-facebook"></i></a>
                         </li>
                     </ul>
+                    <div class="offset-sm-2 col-sm-8 alert alert-danger" role="alert" v-if="serverErrors" v-for="error in serverErrors">
+                        {{ error[0] }}
+                    </div>
                     <div class="form-group row">
-                        <label for="inputEmailForm" class="sr-only control-label">Email</label>
                         <div class="offset-sm-2 col-sm-8">
-                            <input type="text" class="form-control" id="inputEmailForm" placeholder="email" v-model="email">
+                            <input type="text" class="form-control" placeholder="name" v-model="name">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputPasswordForm" class="sr-only control-label">Password</label>
                         <div class="offset-sm-2 col-sm-8">
-                            <input type="text" class="form-control" id="inputPasswordForm" placeholder="password" v-model="password">
+                            <input type="text" class="form-control" placeholder="email" v-model="email">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="offset-sm-2 col-sm-8">
+                            <input type="password" class="form-control" placeholder="password" v-model="password">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -42,33 +48,33 @@
     export default {
         data () {
         	return{
+        		name: '',
         		email: '',
            		password: '',
+                serverErrors: '',
         	}
         },
 
         methods: {
-        	login () {
-        		var data = {
-        			client_id: 2,
-        			client_secret: '2Z9gWrNtf69nBnf6emXK2Jb1sioIe46qnW9hcIhU',
-        			grant_type: 'password',
-        			username: this.email,
-        			password: this.password
-        		}
-
-        		axios.post("/oauth/token", data)
-        			.then(response => {
-        				console.log(response)
-        		    })
-                    .catch(function (error) {
-                        console.log(error)
+        	register() {
+      			this.$store.dispatch('register', {
+        			name: this.name,
+        			email: this.email,
+        			password: this.password,
+      			})
+		        .then(response => {
+                    this.$store.dispatch('retrieveToken', {
+                        email: this.email,
+                        password: this.password,
                     })
-        	},
-
-            isAuthenticated: () => {
-                return this.getToken()
-            }
+                    .then(response => {
+                        this.$router.push({ name: 'user' })
+                    })
+		        })
+                .catch(error => {
+                    this.serverErrors = error
+                })
+    		}
         }
     }
 </script>
