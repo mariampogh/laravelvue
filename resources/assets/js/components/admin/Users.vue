@@ -16,7 +16,6 @@
 			    		<th scope="col">#</th>
 			      		<th scope="col">UserName</th>
 			      		<th scope="col">Email</th>
-			      		<!-- <th scope="col">Password</th> -->
 			      		<th scope="col">Edit</th>
 			      		<th scope="col">Delete</th>
 			    	</tr>
@@ -26,11 +25,6 @@
 				      		<td scope="row">{{ ++index + (meta.current_page-1)*10}}</td>
 				      		<td>{{ user.name }}</td>
 							<td>{{ user.email }}</td>
-							<!-- <td >
-								<button  class="btn btn-default"> 
-									<i class="fa fa-key" aria-hidden="true"></i>
-								</button>
-							</td> -->
 							<td>
 								<router-link :to="{ name: 'admin.users.editUser', params: {user: user}}" c>
 									<button type = "submit" class="btn btn-primary" @click="close">

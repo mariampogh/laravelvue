@@ -18,9 +18,11 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         if($request->user()->isAdmin) {
-          return $next($request);
+            return $next($request);
+        } else if($request->user()->profession_id == 0) {
+            return response()->json('user.professions');
         } else {
-          return response()->json('user');
+            return response()->json('user');
         }
     }
      

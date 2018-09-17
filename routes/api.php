@@ -13,36 +13,34 @@ use Illuminate\Http\Request;
 |
 */
 Route::middleware('auth:api')->group(function () {
-    //get logged in user 
+
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
 
-    //logout
+
    	Route::group(['namespace' => "AuthUser"], function(){
         Route::post('/logout', 'AuthController@logout');
 	});
 
-    // UserCOntroller routes
-    Route::group(['namespace' => "User"], function(){
-        Route::post('/updateUser', 'UserController@updateUser');
+    Route::group(['namespace' => "User", 'prefix' => '/user'], function(){
+        Route::post('/update', 'UserController@updateUser');
         Route::post('/updateCv', 'UserController@updateCv');
-        Route::get('/professions', 'UserController@getProfessions');
-        Route::get('/questions/{id}', 'UserController@getQuestions');
+        Route::get('/professions', 'CvController@professions');
+        Route::get('/questions/{id}', 'CvController@profQuestions');
+        Route::apiResource('/users', 'UserController');
     });
-
-    //admin UserController routes
-    Route::apiResource('/users', 'User\UserController');
 
     Route::middleware('admin')->group(function () {
         //get user role
         Route::get('/getUserRole', function (Request $request) {
               return response()->json('admin');
         });
-
+        
         //admin UserController routes
-        Route::apiResource('/admin/users', 'Admin\UserController', ['as' => 'admin'])->except(['update']);
         Route::post('/admin/users/updateUser', 'Admin\UserController@updateUser');
+        Route::apiResource('/admin/users', 'Admin\UserController', ['as' => 'admin'])->except(['update']);
+       
     });
 });
 

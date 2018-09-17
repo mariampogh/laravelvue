@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 	<div class="container">
         <div class="collapse show py-2 mt-5" id="cardLogin">
             <div class="card">
@@ -105,4 +105,11 @@
     		}
         }
     }
-</script>
+</script> -->
+
+
+<template>
+    <div>
+        hi profile
+    </div>
+</template>

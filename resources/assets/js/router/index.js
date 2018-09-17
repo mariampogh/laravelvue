@@ -1,8 +1,9 @@
 let Login = require('../components/auth/Login.vue');
 let Register = require('../components/auth/Register.vue');
 let Logout = require('../components/auth/Logout.vue');
-let User = require('../components/user/Index.vue');
-let Profile = require('../components/user/Profile.vue');
+let User = require('../components/user/Profile.vue');
+let Professions = require('../components/user/Professions.vue');
+let Questions = require('../components/user/Questions.vue');
 let Admin = require('../components/admin/Index.vue');
 let Users = require('../components/admin/Users.vue');
 let AddUser = require('../components/admin/AddUser.vue');
@@ -47,16 +48,23 @@ const routes = [
 		meta: {
 			requiresAuth: true,
 			// requiresCv: false
-		}
+		},
 	},
 	{
-    	path: '/user/profile',
-    	name: 'user.profile',
-      	component: Profile,
-      	meta: {
-			requiresAuth: true
-		}
-    },
+		path: '/user/professions',
+		name: 'user.professions',
+		component: Professions, 
+		meta: {
+			requiresAuth: true,
+			// requiresCv: false
+		},
+	},
+	{
+		path: '/user/questions/:id',
+		name: 'user.questions',
+		component: Questions, 
+		props: true,
+	},
 	{ 
 		path: '/admin',
 		name: 'admin', 

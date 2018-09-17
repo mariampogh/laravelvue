@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProfessionsTable extends Migration
+class CreateCvTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateProfessionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('professions', function (Blueprint $table) {
+        Schema::create('cv', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->string('answear');
+            $table->('id');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateProfessionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('professions');
+        Schema::dropIfExists('cv');
     }
 }

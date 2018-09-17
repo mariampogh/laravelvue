@@ -41,30 +41,4 @@ class UserController extends Controller
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function getProfessions()
-    {
-        $response = Profession::get(); 
-
-        return response()->json($response, 200);
-    }
-
-    public function getQuestions($id)
-    {
-        $response = Profession::findOrFail($id)->with('questions')->first(); 
-
-        return response()->json($response, 200);
-    }
 }

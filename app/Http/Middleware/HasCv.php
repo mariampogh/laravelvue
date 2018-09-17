@@ -19,7 +19,7 @@ class HasCv
         if($request->user()->profession_id != 0) {
           return $next($request);
         } else {
-          return response()->json('user doesnt have cv');
+          return response()->json('user.professions');
         }
     }
 }

@@ -64,18 +64,11 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //update user
     public function updateUser(Request $request)
     {
         $user = User::findOrFail($request->id);
 
-        
             $request->validate([
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users,email,'.$request->id,

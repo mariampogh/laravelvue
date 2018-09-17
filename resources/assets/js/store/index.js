@@ -136,5 +136,10 @@ export const store = new Vuex.Store({
 		    	})
 	    	})
 	    },
+
+	    foo(context) {
+
+			console.log("SAaaaaa")
+	    }
 	}
 })
